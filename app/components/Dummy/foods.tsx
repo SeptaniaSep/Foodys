@@ -1,15 +1,8 @@
-export interface Foods {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-  image: string;
-  category: "food" | "drink" | "snack";
-}
+import { Foods } from "./schema";
 
-export const products: Foods[] = [
+export const food: Foods[] = [
   { 
-    id: 1, 
+    id: 11, 
     name: "Nasi Gerong", 
     price: 15000, 
     description: "Ini bla bla bla blubub blubuu",
@@ -17,7 +10,7 @@ export const products: Foods[] = [
     category: "food"
 },
   { 
-    id: 2, 
+    id: 12, 
     name: "Sate Binatang", 
     price: 20000, 
     description: "Gugu gaga gaga gugug gigi",
@@ -25,7 +18,7 @@ export const products: Foods[] = [
     category: "food" 
 },
   { 
-    id: 3, 
+    id: 13, 
     name: "Mie Tepung", 
     price: 15000, 
     description: "wa wa wi wawa wi wawa wi wawawa",
@@ -33,7 +26,7 @@ export const products: Foods[] = [
     category: "food" 
 },
 { 
-    id: 4, 
+    id: 14, 
     name: "Steak Daging Hewan", 
     price: 25000, 
     description: "wa wa wi wawa wi wawa wi wawawa",
