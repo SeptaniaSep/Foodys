@@ -1,57 +1,65 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { useCartStore } from "@/lib/cart";
 import { drink } from "../Dummy/drinks";
 import { Foods } from "../Dummy/schema";
 import { DrinkCard } from "./card";
-
+import CartNote from "../cartList";
 
 export default function DrinkList() {
-  const drinkFoods = drink.filter((item) => item.category === "drink");
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const cartItems = useCartStore((state) => state.cartItems);
+  const addToCart = useCartStore((state) => state.addToCart);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const items = drink.filter((item) => item.category === "drink");
+  const totalItems = items.length;
+
+  const [startIndex, setStartIndex] = useState(0);
 
   useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
-
     const interval = setInterval(() => {
-      if (!scrollContainer) return;
-
-      // Geser 1 card ke kanan (220px)
-      scrollContainer.scrollBy({ left: 220, behavior: "smooth" });
-
-      // Jika sudah hampir habis, scroll ulang ke awal (tanpa reset mendadak)
-      if (
-        scrollContainer.scrollLeft + scrollContainer.offsetWidth >=
-        scrollContainer.scrollWidth - 220
-      ) {
-        scrollContainer.scrollTo({ left: 0, behavior: "smooth" });
-      }
+      setStartIndex((prev) => (prev + 1) % totalItems);
     }, 2000);
-
     return () => clearInterval(interval);
-  }, []);
+  }, [totalItems]);
 
-  const handleAdd = (item: Foods) => {
-    console.log("Ditambahkan ke cart:", item);
-  };
+  const visibleItems = Array.from({ length: 4 }, (_, i) => items[(startIndex + i) % totalItems]);
+
+  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
-    <section className="p-4 ">
-      <h2 className="text-2xl font-bold text-orange-600 mb-4 text-center">
-        DRINKS
-      </h2>
+    <section className="p-4">
+      <h2 className="text-2xl font-bold text-center text-orange-600">DRINKS</h2>
 
-      <div
-        ref={scrollRef}
-        className="flex overflow-x-auto gap-4 px-2 pb-4 scroll-smooth hide-scrollbar"
-      >
-        {drinkFoods.map((item) => (
-          <div key={item.id} className="min-w-[220px] flex-shrink-0">
-            <DrinkCard drinks={item} onAdd={handleAdd} />
-          </div>
-        ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-10 pt-2 pb-2">
+        {visibleItems.map((item) => {
+          const inCart = cartItems.find((i) => i.id === item.id);
+          const quantity = inCart?.quantity || 0;
+
+          return (
+            <DrinkCard
+              key={item.id}
+              drinks={item}
+              onAdd={() => {
+                addToCart(item);
+                setIsCartOpen(true);
+              }}
+              onUpdateQuantity={(id, amount) => updateQuantity(id, amount)}
+              cartQuantity={quantity}
+            />
+          );
+        })}
       </div>
+
+      <CartNote
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        items={cartItems}
+        onUpdateQuantity={updateQuantity}
+        subtotal={subtotal}
+      />
     </section>
   );
 }

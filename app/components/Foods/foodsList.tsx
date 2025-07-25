@@ -1,40 +1,21 @@
 "use client";
 
-import { useState } from "react";
 import { food } from "../Dummy/foods";
 import { Foods } from "../Dummy/schema";
 import { FoodsCard } from "./card";
-import { CartItem } from "../Dummy/schema";
-import CartNote from "../cartNote";
+import CartNote from "../cartList";
+import { useCartStore } from "@/lib/cart";
+import { useState } from "react";
 
 export function FoodsList() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const cartItems = useCartStore((state) => state.cartItems);
+  const addToCart = useCartStore((state) => state.addToCart);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleAddToCart = (item: Foods) => {
-    const exist = cartItems.find((ci) => ci.id === item.id);
-    if (exist) {
-      setCartItems((prev) =>
-        prev.map((ci) =>
-          ci.id === item.id ? { ...ci, quantity: ci.quantity + 1 } : ci
-        )
-      );
-    } else {
-      setCartItems((prev) => [...prev, { ...item, quantity: 1 }]);
-    }
+    addToCart(item);
     setIsCartOpen(true);
-  };
-
-  const handleUpdateQuantity = (id: number, amount: number) => {
-    setCartItems((prev) =>
-      prev
-        .map((item) =>
-          item.id === id
-            ? { ...item, quantity: Math.max(0, item.quantity + amount) }
-            : item
-        )
-        .filter((item) => item.quantity > 0)
-    );
   };
 
   const subtotal = cartItems.reduce(
@@ -56,7 +37,7 @@ export function FoodsList() {
               key={product.id}
               foods={product}
               onAdd={handleAddToCart}
-              onUpdateQuantity={handleUpdateQuantity}
+              onUpdateQuantity={updateQuantity}
               cartQuantity={quantity}
             />
           );
@@ -67,7 +48,7 @@ export function FoodsList() {
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         items={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
+        onUpdateQuantity={updateQuantity}
         subtotal={subtotal}
       />
     </section>

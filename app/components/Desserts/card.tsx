@@ -1,33 +1,27 @@
-import { useState } from "react";
+import { Plus, ShoppingCart } from "lucide-react";
 import { Foods } from "../Dummy/schema";
-import { Minus, Plus, ShoppingCart } from "lucide-react";
+
+interface DessertsCardProps {
+  desserts: Foods;
+  onAdd: (item: Foods) => void;
+  onUpdateQuantity: (id: number, amount: number) => void;
+  cartQuantity: number;
+}
 
 export function DessertsCard({
   desserts,
   onAdd,
-}: {
-  desserts: Foods;
-  onAdd: (item: Foods) => void;
-}) {
-   const [quantity, setQuantity] = useState(0);
-      
-        const handleAdd = () => {
-          setQuantity(1);
-          onAdd(desserts);
-        };
-      
-        const handleIncrease = () => {
-          setQuantity((prev) => prev + 1);
-          onAdd(desserts);
-        };
-      
-        const handleDecrease = () => {
-          if (quantity > 1) {
-            setQuantity((prev) => prev - 1);
-          } else {
-            setQuantity(0);
-          }
-        };
+  onUpdateQuantity,
+  cartQuantity = 0,
+}: DessertsCardProps) {
+  const handleAdd = () => {
+    onAdd(desserts);
+  };
+
+  const handleIncrease = () => {
+    onUpdateQuantity(desserts.id, 1);
+  };
+
   return (
     <div className="rounded-xl shadow-md p-4 bg-white">
       <img
@@ -39,28 +33,20 @@ export function DessertsCard({
       <p className="text-sm text-gray-500">
         Rp {desserts.price.toLocaleString("id-ID")}
       </p>
-      {quantity === 0 ? (
+
+      {cartQuantity === 0 ? (
         <button
           onClick={handleAdd}
-          className="mt-2 px-4 py-1 flex items-center justify-center gap-2 text-orange-600 border border-orange-500 rounded-full hover:bg-orange-100 w-full  cursor-pointer"
+          className="mt-2 px-4 py-2 flex items-center justify-center gap-2 text-white bg-orange-600 rounded-md hover:bg-orange-700 w-full font-semibold"
         >
           <ShoppingCart size={18} />
-          Add to Cart
+          Tambah ke Keranjang
         </button>
       ) : (
-        <div className="mt-2 flex items-center cursor-pointer justify-between bg-orange-500 text-white rounded-full px-4 py-1 w-full">
-          <button
-            className="border rounded-full cursor-pointer"
-            onClick={handleDecrease}
-          >
-            <Minus size={21} />
-          </button>
-          <span className="text-sm">{quantity}</span>
-          <button
-            className="border rounded-full cursor-pointer"
-            onClick={handleIncrease}
-          >
-            <Plus size={21} />
+        <div className="mt-2 flex items-center justify-between bg-orange-600 hover:bg-orange-700 text-white rounded-md px-4 py-2 font-semibold">
+          <span>Dalam Keranjang ({cartQuantity})</span>
+          <button onClick={handleIncrease} className="px-2">
+            <Plus size={18} />
           </button>
         </div>
       )}

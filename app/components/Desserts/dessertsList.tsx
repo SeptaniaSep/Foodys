@@ -1,30 +1,59 @@
 "use client";
-
-
+import { useState, useEffect } from "react";
+import { useCartStore } from "@/lib/cart";
 import { dessert } from "../Dummy/desserts";
-import { Foods } from "../Dummy/schema";  
 import { DessertsCard } from "./card";
+import CartNote from "../cartList";
 
 export default function DessertList() {
-  const dessertFoods = dessert
-  .filter((item) => item.category === "dessert")
-  .slice(0, 4);
+  const cartItems = useCartStore(state => state.cartItems);
+  const addToCart = useCartStore(state => state.addToCart);
+  const updateQuantity = useCartStore(state => state.updateQuantity);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const handleAdd = (item: Foods) => {
-    console.log("Ditambahkan ke cart:", item);
+  const items = dessert.filter(item => item.category === "dessert");
+  const totalItems = items.length;
 
-  };
+  const [startIndex, setStartIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStartIndex(prev => (prev + 1) % totalItems);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [totalItems]);
+
+  const visibleItems = Array.from({ length: 4 }, (_, i) => items[(startIndex + i) % totalItems]);
+
+  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
-    <section className="p-4">
-      <h2 className="text-2xl font-bold text-center text-orange-600">
-       DESSERTS 
-      </h2>
+    <section className="p-4 ">
+      <h2 className="text-2xl font-bold text-center text-orange-600">DESSERTS</h2>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-10 pt-2">
-        {dessertFoods.map((item) => (
-          <DessertsCard key={item.id} desserts={item} onAdd={handleAdd} />
-        ))}
+        {visibleItems.map(item => {
+          const inCart = cartItems.find(i => i.id === item.id);
+          const quantity = inCart?.quantity || 0;
+          return (
+            <DessertsCard
+              key={item.id}
+              desserts={item}
+              onAdd={() => { addToCart(item); setIsCartOpen(true); }}
+              onUpdateQuantity={(id, amount) => updateQuantity(id, amount)}
+              cartQuantity={quantity}
+            />
+          );
+        })}
       </div>
+
+      <CartNote
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        items={cartItems}
+        onUpdateQuantity={updateQuantity}
+        subtotal={subtotal}
+      />
     </section>
   );
 }

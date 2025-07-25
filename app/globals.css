@@ -130,6 +130,22 @@
   display: none;
 }
 
+/* Buat daftar belanjaan  */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 50vh; /* atau 100% dari modal */
+  overflow: hidden;
+}
+
+.daftar-belanja-scrollable {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 90px; /* Ubah sesuai kebutuhan */
+  margin-bottom: 1rem;
+}
+
+
 
 /* Toast Best seller food */
 @keyframes slideIn {

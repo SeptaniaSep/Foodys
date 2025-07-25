@@ -5,7 +5,7 @@ import DrinkList from "@/app/components/Drinks/drinksList";
 
 export default function AllPosts() {
   return (
-    <main className="min-h-screen bg-gray-100">
+    <main className="min-h-screen bg-gray-100 ">
       <div className="p-6 pb-2">
         <BackgroundSlider />
       </div>
