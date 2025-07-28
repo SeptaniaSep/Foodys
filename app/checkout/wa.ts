@@ -24,9 +24,9 @@ export function generateWhatsAppUrl({
     )
     .join("\n");
 
-  const totalText = `\n------------------\n💰 Total: Rp ${subtotal}`;
+  const totalText = `\n-------->\n💰 Total: Rp ${subtotal}`;
 
-  const message = `Assalamualaikum Wr. Wb.\nHalo kak aku mau pesen makanan nih :)\n\n📦 Untuk: ${forWhom}\n====================\n👤 Atas nama: ${name}\n📞 No. WA: ${phone}\n🏠 Alamat: ${address}\n====================\n🍽️ Pesanan:\n${itemsText}\n====================${totalText}\n====================\n\nTerimakasih sudah memesan makanan FOODYS kami :)`;
+  const message = `Assalamualaikum Wr. Wb.\nHalo kak aku mau pesen makanan nih :)\n\n📦 Untuk: ${forWhom}\n====================\n👤 Atas nama: ${name}\n📞 No. WA: ${phone}\n🏠 Alamat: ${address}\n====================\n🍽️ Pesanan:\n${itemsText}\n====================${totalText}\n====================\n\nTerimakasih :)`;
 
   const encodedMessage = encodeURIComponent(message);
   return `https://wa.me/6285641557416?text=${encodedMessage}`;

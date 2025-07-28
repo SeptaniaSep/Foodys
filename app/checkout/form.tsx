@@ -152,8 +152,8 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                 {/* Daftar item scrollable */}
                 <div className="flex-1 overflow-y-auto hide-scrollbar pr-2 relative">
                   {/* Panah scroll indikator */}
-                  <div className="absolute top-1 right-2 text-orange-400 text-xs animate-bounce">
-                    ↑↓
+                  <div className="absolute top-1 right-2 text-orange-400 text-3xl animate-bounce">
+                    ↓
                   </div>
                   <ul className="space-y-2">
                     {cartItems.map((item: CartItem) => (
