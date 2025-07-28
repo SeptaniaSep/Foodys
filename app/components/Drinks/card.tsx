@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Foods } from "../Dummy/schema";
 import { Plus } from "lucide-react";
+import { CartIcon } from "../cardIcon";
 
 export function DrinkCard({
   drinks,
@@ -13,22 +14,22 @@ export function DrinkCard({
   onUpdateQuantity: (id: number, amount: number) => void;
   cartQuantity: number;
 }) {
-    const [setQuantity] = useState(0);
-    
-      const handleAdd = () => {
-        onAdd(drinks);
-      };
-    
-        const handleIncrease = () => {
+  const [setQuantity] = useState(0);
+
+  const handleAdd = () => {
+    onAdd(drinks);
+  };
+
+  const handleIncrease = () => {
     onUpdateQuantity(drinks.id, 1);
   };
 
   return (
-    <div className="rounded-xl shadow-md p-4 bg-white">
+    <div className="rounded-xl shadow-md p-2 sm:p-4 bg-white text-sm sm:text-base">
       <img
         src={drinks.image}
         alt={drinks.name}
-        className="w-full h-42 object-cover rounded-md"
+        className="w-full h-24 sm:h-40 object-cover rounded-md"
       />
       <h3 className="text-lg font-semibold mt-2">{drinks.name}</h3>
       <p className="text-sm text-gray-500">
@@ -38,17 +39,18 @@ export function DrinkCard({
       {cartQuantity === 0 ? (
               <button
                 onClick={handleAdd}
-                className="mt-2 px-4 py-2 flex items-center justify-center gap-2 text-white bg-orange-600 rounded-md hover:bg-orange-700 w-full font-semibold"
+                className=" flex mt-2 px-4 py-2 items-center justify-center gap-2 text-white bg-orange-600 rounded-md hover:bg-orange-700 w-full font-semibold"
               >
-                Tambah ke Keranjang
+                Tambah <CartIcon size={20} />
               </button>
             ) : (
-              <div className="mt-2 flex justify-between items-center bg-orange-600 hover:bg-orange-700 text-white rounded-md px-4 py-2 font-semibold">
-                <span>Dalam Keranjang ({cartQuantity})</span>
-                <button onClick={handleIncrease} className="hover:text-yellow-200">
-                  <Plus size={18} />
-                </button>
-              </div>
+              <button
+                onClick={handleIncrease}
+                className="mt-2 px-4 py-2 flex items-center justify-between gap-2 text-white bg-orange-600 rounded-md hover:bg-orange-700 w-full font-semibold"
+              >
+                <span className="flex items-center justify-center gap-2"><CartIcon size={20} /> ({cartQuantity})</span>
+                <Plus size={18} className="hover:text-yellow-200" />
+              </button>
             )}
     </div>
   );

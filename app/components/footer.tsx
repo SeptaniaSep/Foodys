@@ -1,17 +1,23 @@
-import { FaFacebookF, FaInstagram, FaYoutube, FaTiktok, FaWhatsapp, FaMapMarkerAlt } from "react-icons/fa";
-import { MdLocationOn } from "react-icons/md";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaYoutube,
+  FaTiktok,
+  FaWhatsapp,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 import { TbMapSearch } from "react-icons/tb";
 
 export default function Footer() {
   return (
-    <footer className="bg-orange-600 text-orange-200 py-10 px-6">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+    <footer className="bg-orange-600 text-orange-200 py-6 px-4 sm:py-10 sm:px-6">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10">
         {/* Link Penting */}
         <div>
-          <h3 className="text-lg font-semibold mb-3">Link Penting</h3>
-          <ul className="text-sm space-y-3">
+          <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Link Penting</h3>
+          <ul className="text-xs sm:text-sm space-y-2 sm:space-y-3">
             <li className="flex items-center gap-2">
-              <FaWhatsapp size={20} className="text-white" />
+              <FaWhatsapp size={16} className="text-white " />
               <a
                 href="https://wa.me/6285641557416"
                 target="_blank"
@@ -22,11 +28,11 @@ export default function Footer() {
               </a>
             </li>
             <li className="flex items-center gap-2">
-              <FaMapMarkerAlt size={20} className="text-white" />
+              <FaMapMarkerAlt size={16} className="text-white" />
               <span>Jl. Contoh Alamat No.123, Kota ABC</span>
             </li>
             <li className="flex items-center gap-2">
-              <TbMapSearch size={20} className="text-white" />
+              <TbMapSearch size={16} className="text-white" />
               <a
                 href="https://www.google.com/maps?q=-7.797068,110.370529"
                 target="_blank"
@@ -41,29 +47,25 @@ export default function Footer() {
 
         {/* Marketplace */}
         <div>
-          <h3 className="text-lg font-semibold mb-3">Marketplace</h3>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex gap-4">
-              <div className="border rounded-full text-4xl">
-                <FaFacebookF className="hover:text-orange-900 cursor-pointer p-2" />
-              </div>
-              <div className="border rounded-full text-4xl">
-                <FaInstagram className="hover:text-orange-900 cursor-pointer p-2" />
-              </div>
-              <div className="border rounded-full text-4xl">
-                <FaYoutube className="hover:text-orange-900 cursor-pointer p-2" />
-              </div>
-              <div className="border rounded-full text-4xl">
-                <FaTiktok className="hover:text-orange-900 cursor-pointer p-2" />
-              </div>
+          <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Marketplace</h3>
+          <div className="grid grid-cols-2 gap-2 sm:gap-4">
+            <div className="flex gap-2 sm:gap-4">
+              {[FaFacebookF, FaInstagram, FaYoutube, FaTiktok].map((Icon, i) => (
+                <div
+                  key={i}
+                  className="border rounded-full text-xl sm:text-4xl"
+                >
+                  <Icon className="hover:text-orange-900 cursor-pointer p-1 sm:p-2" />
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Tentang Kami */}
         <div>
-          <h3 className="text-lg font-semibold mb-3">Tentang Kami</h3>
-          <p className="text-sm mb-4">
+          <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Tentang Kami</h3>
+          <p className="text-xs sm:text-sm">
             Foodys adalah platform e-commerce kuliner yang menghadirkan beragam
             menu makanan khas Nusantara yang enak, bergizi, dan menggugah
             selera. Kami menyediakan berbagai pilihan hidangan tradisional dan
@@ -73,7 +75,7 @@ export default function Footer() {
       </div>
 
       {/* Copyright */}
-      <div className="mt-10 text-center text-sm text-orange-200">
+      <div className="mt-6 sm:mt-10 text-center text-xs sm:text-sm text-orange-200">
         @By: Septania Nopa H • Frontend Dev 2025
       </div>
     </footer>

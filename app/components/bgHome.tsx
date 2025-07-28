@@ -19,12 +19,22 @@ export default function BackgroundSlider() {
 
   return (
     <div
-      className="w-full h-90 bg-cover bg-center transition-all duration-2000"
-      style={{
-        backgroundImage: `url(${images[index]})`,
-      }}
-    >
-      {/* Bisa tambahin konten di sini */}
-    </div>
+  className="
+    w-full 
+    h-[100px]         // tinggi default (HP)
+    sm:h-[300px]      // tablet
+    md:h-[400px]      // laptop
+    bg-cover 
+    bg-center 
+    transition-all 
+    duration-2000
+  "
+  style={{
+    backgroundImage: `url(${images[index]})`,
+  }}
+>
+  {/* Konten di sini */}
+</div>
+
   );
 }

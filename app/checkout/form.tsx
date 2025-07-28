@@ -19,7 +19,7 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     name: "",
     phone: "",
     address: "",
-    deliveryMethod: "ambil", 
+    deliveryMethod: "ambil",
   });
 
   const handleChange = (
@@ -150,10 +150,14 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
             ) : (
               <>
                 {/* Daftar item scrollable */}
-                <div className="flex-1 overflow-y-auto hide-scrollbar pr-2">
+                <div className="flex-1 overflow-y-auto hide-scrollbar pr-2 relative">
+                  {/* Panah scroll indikator */}
+                  <div className="absolute top-1 right-2 text-orange-400 text-xs animate-bounce">
+                    ↑↓
+                  </div>
                   <ul className="space-y-2">
                     {cartItems.map((item: CartItem) => (
-                      <li key={item.id} className="flex justify-between">
+                      <li key={item.id} className="flex justify-between mr-4">
                         <span>
                           {item.name} x {item.quantity}
                         </span>
@@ -165,7 +169,7 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
                 {/* Total & tombol di bawah */}
                 <div className="border-t pt-2 mt-2">
-                  <div className="flex justify-between font-bold mb-2">
+                  <div className="flex justify-between font-bold mb-2 mr-3">
                     <span>Total</span>
                     <span>Rp {subtotal}</span>
                   </div>

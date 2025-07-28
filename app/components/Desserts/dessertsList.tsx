@@ -31,7 +31,10 @@ export default function DessertList() {
     <section className="p-4 ">
       <h2 className="text-2xl font-bold text-center text-orange-600">DESSERTS</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-10 pt-2">
+      <div
+        className="grid gap-4 px-4 py-2"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))" }}
+      >
         {visibleItems.map(item => {
           const inCart = cartItems.find(i => i.id === item.id);
           const quantity = inCart?.quantity || 0;

@@ -13,16 +13,16 @@ export default function CategoryTabs({
   setSelectedCategory,
 }: CategoryTabsProps) {
   return (
-    <div className="flex justify-center gap-4 mb-4 flex-wrap">
+    <div className="flex justify-center gap-1 sm:gap-4 mb-4 flex-wrap px-1 sm:px-0">
       {categories.map((cat) => (
         <button
           key={cat}
           onClick={() => setSelectedCategory(cat.toLowerCase())}
-          className={`min-w-[100px] px-4 py-2 rounded-full border flex justify-center items-center
+          className={`text-xs sm:text-base min-w-[60px] sm:min-w-[100px] px-2 sm:px-4 py-1.5 sm:py-2 rounded-full border flex justify-center items-center
             ${
               selectedCategory === cat.toLowerCase()
                 ? 'bg-orange-600 text-white border-orange-600'
-                : ' bg-orange-50 text-gray-700 border-orange-600'
+                : 'bg-orange-50 text-gray-700 border-orange-600'
             } transition`}
         >
           {cat}

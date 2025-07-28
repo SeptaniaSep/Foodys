@@ -27,7 +27,7 @@ export default function CartNote({
 }: CartNoteProps) {
   return (
     <div
-      className={`fixed top-0 right-0 h-full w-[550px] bg-white shadow-lg z-50 transition-transform duration-300 ${
+      className={`fixed top-0 right-0 h-full w-full sm:w-[550px] bg-white shadow-lg z-50 transition-transform duration-300 ${
         isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
@@ -105,7 +105,11 @@ export default function CartNote({
               </button>
             </DialogClose>
 
-            <CheckoutModal isOpen={isOpen}  cartItems={items} onClose={onClose} />
+            <CheckoutModal
+              isOpen={isOpen}
+              cartItems={items}
+              onClose={onClose}
+            />
           </DialogContent>
         </Dialog>
       </div>
